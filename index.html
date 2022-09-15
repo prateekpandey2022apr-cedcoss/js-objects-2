@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <table>
+        <tr>
+          <td>Product ID</td>
+          <td><input type="number" name="id" class="product-id" /></td>
+        </tr>
+        <tr>
+          <td>Product Name</td>
+          <td><input type="text" name="name" class="product-name" /></td>
+        </tr>
+        <tr>
+          <td>Product Price</td>
+          <td><input type="number" name="price" class="product-price" /></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><input type="submit" class="btn" /></td>
+        </tr>
+      </table>
+    </form>
+
+    <table class="product-list">
+      <tr>
+        <td>Product ID</td>
+        <td>Product Name</td>
+        <td>Product Price</td>
+      </tr>
+    </table>
+
+    <script>
+      window.addEventListener("DOMContentLoaded", function (event) {
+        console.log("DOM Content Loaded");
+
+        function addRow(product) {
+          // console.log(product);
+          const table = document.querySelector(".product-list");
+          table.insertAdjacentHTML(
+            "beforeend",
+            `
+					<tr>
+						<td>${product.id}</td>
+						<td>${product.name}</td>
+						<td>${product.price}</td>
+					<tr>`
+          );
+        }
+
+        let form = document.querySelector("form");
+
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let formData = new FormData(form);
+          let input = Object.fromEntries(formData.entries());
+
+          if (!input.id || !input.name || !input.price) {
+            alert("All values are required");
+            return;
+          }
+
+          console.log(input);
+          addRow(input);
+          this.reset();
+        });
+      });
+    </script>
+  </body>
+</html>
